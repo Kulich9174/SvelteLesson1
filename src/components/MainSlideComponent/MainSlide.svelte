@@ -1,7 +1,9 @@
 <script>
     let count = 0;
     import { writable } from 'svelte/store';
-    import {countStore} from '../../store';
+    import {countStore, name1, greeting} from '../../store';
+    import { onDestroy } from 'svelte';
+    import {time,elapsed } from '../../timeStore';
 
     let name = '';
     let surname = '';
@@ -23,10 +25,34 @@
         age = '';
     }
     let count_value;
-    countStore.subscribe((value) => {
-		count_value = value;
-	});
+    // countStore.subscribe((value) => {
+	// 	count_value = value;
+	// });
+    // const unsubscribe = countStore.subscribe(value => {
+	// 	count_value = value;
+	// });
+
+	// onDestroy(unsubscribe); из-за автоподписки $count Svelte самостоятельно отписывает от хранилища
+
+    const formatter = new Intl.DateTimeFormat(
+		'en',
+		{
+			hour12: true,
+			hour: 'numeric',
+			minute: '2-digit',
+			second: '2-digit'
+		}
+	);
 </script>
+<p>Timer</p>
+<section>
+    <h2>The time is {formatter.format($time)}</h2>
+    <p>
+        This page has been open for
+        {$elapsed}
+        {$elapsed === 1 ? 'second' : 'seconds'}
+    </p>
+</section>
 
 <div class="bodyContainer">
     <div class="buttonsContainer">
@@ -43,14 +69,15 @@
 
     <p>Counter: {count}</p>
     <div>
-        <button on:click={count_value.update((n)=> n + 1)}>
+        <button on:click={() => countStore.update(n => n + 1)}>
             Increase Store counter
         </button>
-        <button on:click|once={count_value.update((n)=> n - 1)}>
-            Decrease store counter
+        <button on:click={() => countStore.update(n => n - 1)}>
+            Decrease Store counter
         </button>
     </div>
-    <p>Store counter: {count_value}</p>
+    <!-- <p>Store counter: {count_value}</p> -->
+    <p>Store counter: {$countStore}</p>
     {#if (count > 10)}
         <p>Значение слишком большое</p>
     {:else if ( count < 5)}
@@ -78,17 +105,33 @@
         {/each}
     </div>
 </div>
-<label>
-	<input type="number" bind:value={a} min="0" max="10" />
-	<input type="range" bind:value={a} min="0" max="10" />
-</label>
 
-<label>
-	<input type="number" bind:value={b} min="0" max="10" />
-	<input type="range" bind:value={b} min="0" max="10" />
-</label>
-<p>{a} + {b} = {a+b}</p>
+<p>label bind number/range</p>
+<div>
+    <label>
+        <input type="number" bind:value={a} min="0" max="10" />
+        <input type="range" bind:value={a} min="0" max="10" />
+    </label>
     
+    
+    <label>
+        <input type="number" bind:value={b} min="0" max="10" />
+        <input type="range" bind:value={b} min="0" max="10" />
+    </label>
+    <p>{a} + {b} = {a+b}</p>
+</div>
+
+
+
+<p>Store binding</p>
+<div>
+    <h2>{$greeting}</h2>
+<input bind:value={$name1} />
+
+<button on:click={() => $name1 += '!'}>
+	Add exclamation mark!
+</button>
+</div>
 
 <style>
     .buttonsContainer{
