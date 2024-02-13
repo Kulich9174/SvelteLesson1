@@ -1,13 +1,13 @@
 <script>
 	export let name;
-	import { onMount } from 'svelte';
+	// import { onMount } from 'svelte';
 
 
 	import MainSlide from "./components/MainSlideComponent/MainSlide.svelte";
 	import RedButton from "./components/ComponentEvent/RedButton.svelte";
 	import Inputs from "./components/Inputs/Inputs.svelte";
 	import Outer from "./components/ComponentEvent/Outer.svelte";
-	import {paint} from './components/Lifecycle/onMount/gradient';
+	// import {paint} from './components/Lifecycle/onMount/gradient';
 	
 	const audio = new Audio();
 	// audio.src = horn;
@@ -21,16 +21,16 @@
 		alert(event.detail.text);
 	} // прокидывание сообщения
 
-	onMount(() => {
-		const canvas = document.querySelector('canvas');
-		const context = canvas.getContext('2d');
+// 	onMount(() => {
+// 		const canvas = document.querySelector('canvas');
+// 		const context = canvas.getContext('2d');
 
-		requestAnimationFrame(function loop(t) {
-			requestAnimationFrame(loop);
-			paint(context, t);
-		});
-	});
-</script>
+// 		requestAnimationFrame(function loop(t) {
+// 			requestAnimationFrame(loop);
+// 			paint(context, t);
+// 		});
+// 	});
+// </script>
 
 <main>
 	<div class="header">

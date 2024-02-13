@@ -1,6 +1,7 @@
 <script>
     let count = 0;
     import { writable } from 'svelte/store';
+    import {countStore} from '../../store';
 
     let name = '';
     let surname = '';
@@ -21,6 +22,10 @@
         surname = '';
         age = '';
     }
+    let count_value;
+    countStore.subscribe((value) => {
+		count_value = value;
+	});
 </script>
 
 <div class="bodyContainer">
@@ -28,14 +33,24 @@
         <button on:click={()=>{count+=1}}>
             Increase counter
         </button>
+       
         
         <button on:click|once={()=>{count-=1}}>
             Decrease counter
         </button>
+        
     </div>
 
     <p>Counter: {count}</p>
-
+    <div>
+        <button on:click={count_value.update((n)=> n + 1)}>
+            Increase Store counter
+        </button>
+        <button on:click|once={count_value.update((n)=> n - 1)}>
+            Decrease store counter
+        </button>
+    </div>
+    <p>Store counter: {count_value}</p>
     {#if (count > 10)}
         <p>Значение слишком большое</p>
     {:else if ( count < 5)}
