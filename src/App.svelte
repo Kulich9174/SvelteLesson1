@@ -1,13 +1,11 @@
 <script>
 	export let name;
-	// import { onMount } from 'svelte';
 
 
 	import MainSlide from "./components/MainSlideComponent/MainSlide.svelte";
 	import RedButton from "./components/ComponentEvent/RedButton.svelte";
 	import Inputs from "./components/Inputs/Inputs.svelte";
 	import Outer from "./components/ComponentEvent/Outer.svelte";
-	// import {paint} from './components/Lifecycle/onMount/gradient';
 	
 	const audio = new Audio();
 	// audio.src = horn;
@@ -21,16 +19,7 @@
 		alert(event.detail.text);
 	} // прокидывание сообщения
 
-// 	onMount(() => {
-// 		const canvas = document.querySelector('canvas');
-// 		const context = canvas.getContext('2d');
-
-// 		requestAnimationFrame(function loop(t) {
-// 			requestAnimationFrame(loop);
-// 			paint(context, t);
-// 		});
-// 	});
-// </script>
+</script>
 
 <main>
 	<div class="header">
@@ -43,10 +32,6 @@
 	<Outer on:message={handleMessage} />
 	<h2>Inputs</h2>
 	<Inputs/>
-	<canvas
-	width={32}
-	height={32}
-/>
 </main>
 
 <style>
@@ -72,16 +57,4 @@
 		}
 	}
 
-	canvas {
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background-color: #666;
-		mask: url(./components/Lifecycle/onMount/logo.svg) 50% 50% no-repeat;
-		mask-size: 60vmin;
-		-webkit-mask: url(./components/Lifecycle/onMount/logo.svg) 50% 50% no-repeat;
-		-webkit-mask-size: 60vmin;
-	}
 </style>
