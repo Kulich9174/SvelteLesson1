@@ -12,7 +12,6 @@
 /**  To work on this script:
   rm -rf test-template template && git clone sveltejs/template test-template && node scripts/setupTypeScript.js test-template
 */
-
 import fs from "fs"
 import path from "path"
 import { argv } from "process"
